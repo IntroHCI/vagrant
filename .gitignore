@@ -16,3 +16,8 @@ node_modules
 
 .vagrant
 *~
+
+.DS_Store
+.bash_history
+.cache
+.sudo_as_admin_successful
