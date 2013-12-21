@@ -93,20 +93,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "git"
     chef.add_recipe "nodejs"
     chef.add_recipe "heroku"
+    chef.add_recipe "emacs"
   end
 
   # MSB: Add node packages
   $script = <<SCRIPT
     echo Installing node packages...
-    npm install -g express
-    npm install -g mongoose
-    npm install -g jade
-    echo Upgrading all packages...
-    sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-    echo Restarting machine to install packages...
-    sudo shutdown -r 0
+    npm install -g express --no-bin-link
+    npm install -g mongoose --no-bin-link
+    npm install -g jade --no-bin-link
 SCRIPT
-  config.vm.provision "shell", inline: $script
+  # config.vm.provision "shell", inline: $script
+
+  #    echo Upgrading all packages...
+  #  sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+  #  echo Restarting machine to install packages...
+  #  sudo shutdown -r 0 
 
   # MSB: from original template:
   #  chef.cookbooks_path = "../my-recipes/cookbooks"
