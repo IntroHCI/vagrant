@@ -21,3 +21,5 @@ node_modules
 .bash_history
 .cache
 .sudo_as_admin_successful
+
+.gitconfig
