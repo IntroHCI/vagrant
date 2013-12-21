@@ -5,14 +5,17 @@
  * Created by: Michael Bernstein
  * Last updated: December 2013
  */
+var PORT = 3000;
 
 // Express is a web framework for node.js
 // that makes nontrivial applications easier to build
 var express = require('express');
+
+// Create the server instance
 var app = express();
 
-// Compress all pages we send across the wire
-// so they transfer faster
+// Print logs to the console and compress pages we send
+app.use(express.logger());
 app.use(express.compress());
 
 // Return all pages in the /static directory
@@ -22,4 +25,5 @@ app.use(express.compress());
 app.use(express.static(__dirname + '/static'));
 
 // Start the server
-app.listen(process.env.PORT || 3000);
+app.listen(PORT);
+console.log("Node.js server running on port %s. Access through a webserver at http://localhost:%s/", PORT, PORT);
