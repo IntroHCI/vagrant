@@ -92,18 +92,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "mongodb"
     chef.add_recipe "git"
     chef.add_recipe "nodejs"
-    chef.add_recipe "heroku"
+#    chef.add_recipe "heroku"
     chef.add_recipe "emacs"
   end
 
   # MSB: Add node packages
   $script = <<SCRIPT
+    echo Installing Heroku Toolbelt...
+    wget -qO- https://toolbelt.heroku.com/install.sh | sh
     echo Installing node packages...
     npm install -g express --no-bin-link
     npm install -g mongoose --no-bin-link
-    npm install -g jade --no-bin-link
+    echo Done!
 SCRIPT
-  # config.vm.provision "shell", inline: $script
+  config.vm.provision "shell", inline: $script
 
   #    echo Upgrading all packages...
   #  sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
