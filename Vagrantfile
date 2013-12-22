@@ -87,25 +87,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "build-essential"
     chef.add_recipe "apt"
     chef.add_recipe "yum"
-    chef.add_recipe "python"
-    chef.add_recipe "runit"
-    chef.add_recipe "mongodb"
+      # MSB 12/22: runit cookbook seems buggy --- installing MongoDB manually below for now
+      #chef.add_recipe "python"
+      #chef.add_recipe "runit"
+      #chef.add_recipe "mongodb"
     chef.add_recipe "git"
     chef.add_recipe "nodejs"
-#    chef.add_recipe "heroku"
     chef.add_recipe "emacs"
+      # MSB 12/22: heroku toolbelt cookbook also seems buggy --- running manually
+      # chef.add_recipe "heroku"
   end
 
-  # MSB: Add node packages
-  $script = <<SCRIPT
-    echo Installing Heroku Toolbelt...
-    wget -qO- https://toolbelt.heroku.com/install.sh | sh
-    echo Installing node packages...
-    npm install -g express --no-bin-link
-    npm install -g mongoose --no-bin-link
-    echo Done!
-SCRIPT
-  config.vm.provision "shell", inline: $script
+  config.vm.provision "shell", path: "cs147-extras.sh"
 
   #    echo Upgrading all packages...
   #  sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
